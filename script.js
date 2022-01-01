@@ -28,7 +28,7 @@ function newBook() {
         ['Has this been read?', 'CHECKBOX'],
         ['Sumbit', 'BUTTON'],
     ];
-    Object.keys(myFields).forEach((array) => {
+    Object.keys(myFields).forEach((field) => {
         const br = document.createElement('BR');
         formdisplay.appendChild(br);
         const newLabel = document.createElement('LABEL');
@@ -41,7 +41,7 @@ function newBook() {
         if (newInput.type === 'button') {
             newLabel.remove();
             newInput.value = 'Submit';
-        }
+        };
     });
     return 'Fill out the form';
 };
