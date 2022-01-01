@@ -18,5 +18,30 @@ function diplayBooks() {
 };
 
 function newBook() {
-    
+    const formdisplay = document.getElementById('formdisplay');
+    const myForm = document.createElement('form');
+    myForm.id = 'myform';
+    const myFields = [
+        ['Title', 'TEXT'],
+        ['Author', 'TEXT'],
+        ['Pages', 'TEXT'],
+        ['Has this been read?', 'CHECKBOX'],
+        ['Sumbit', 'BUTTON'],
+    ];
+    Object.keys(myFields).forEach((array) => {
+        const br = document.createElement('BR');
+        formdisplay.appendChild(br);
+        const newLabel = document.createElement('LABEL');
+        newLabel.textContent = myFields[array][0];
+        formdisplay.appendChild(newLabel);
+        const newInput = document.createElement('INPUT');
+        newInput.type = myFields[array][1];
+        newInput.id = myFields[array][1].toLowerCase();
+        formdisplay.appendChild(newInput);
+        if (newInput.type === 'button') {
+            newLabel.remove();
+            newInput.value = 'Submit';
+        }
+    });
+    return 'Fill out the form';
 };
