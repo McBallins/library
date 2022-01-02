@@ -1,6 +1,6 @@
-const isYoMama = new Book('is yo mama?', 'George', 9999, 'yes');
-const notYoMama = new Book('not yo mama', 'Elon Musk', 420, 'yes');
-const yoMama = new Book('Yo Mama', 'Fat Albert', 69, 'no');
+const isYoMama = new Book('is yo mama?', 'George', 9999, true);
+const notYoMama = new Book('not yo mama', 'Elon Musk', 420, true);
+const yoMama = new Book('Yo Mama', 'Fat Albert', 69, false);
 
 let myLibrary = [
     isYoMama,
@@ -20,11 +20,11 @@ function Book(title, author, pages, read) {
 };
 
 const myFields = [
-    ['Title', 'TEXT'],
-    ['Author', 'TEXT'],
-    ['Pages', 'TEXT'],
-    ['Has this been read?', 'CHECKBOX'],
-    ['Sumbit', 'BUTTON', ''],
+    ['Title', 'TEXT', 'title'],
+    ['Author', 'TEXT', 'author'],
+    ['Pages', 'TEXT', 'pages'],
+    ['Has this been read?', 'CHECKBOX', 'read'],
+    ['Sumbit', 'BUTTON', 'submit'],
 ]
 
 function displayBooks() {
@@ -61,6 +61,7 @@ function displayBooks() {
         const newInput = document.createElement('INPUT');
         newInput.type = 'CHECKBOX';
         newInput.id = 'checkbox';
+        // make it so check box is xhexk if read = true
         readColumn.appendChild(newInput);
         newRow.appendChild(readColumn);
         masterRow.appendChild(newRow);
@@ -68,22 +69,50 @@ function displayBooks() {
     return 'Books displayed';
 };
 
+let enableaddbook = true;
+const addbook = document.getElementById('newbook');
+addbook.addEventListener('click', event => {
+    if (enableaddbook === true) {
+    enableaddbook = false;
+    newBook();
+    };
+});
+
 function newBook() {
     const formdisplay = document.getElementById('formdisplay');
     Object.keys(myFields).forEach((field) => {
         const br = document.createElement('BR');
         formdisplay.appendChild(br);
         const newLabel = document.createElement('LABEL');
+        newLabel.classList = ('form');
         newLabel.textContent = myFields[field][0];
         formdisplay.appendChild(newLabel);
         const newInput = document.createElement('INPUT');
         newInput.type = myFields[field][1];
-        newInput.id = myFields[field][1].toLowerCase();
+        newInput.classList = ('form');
+        newInput.id = myFields[field][2];
         formdisplay.appendChild(newInput);
         if (newInput.type === 'button') {
             newLabel.remove();
             newInput.value = 'Submit';
+            newInput.classList = ('form');
+            newInput.id  = myFields[field][2];
+            const submit = document.getElementById('submit');
+            submit.addEventListener('click', submit => {
+                const title = document.getElementById('title').value;
+                const author = document.getElementById('author').value;
+                const pages = document.getElementById('pages').value;
+                const read = document.getElementById('read').checked;
+                enableaddbook = true;
+                myLibrary += new Book(title, author, pages, read);
+                const forms = document.querySelectorAll('.form')
+                console.log(forms);
+                forms.forEach((form => {
+                    const toRemove = document.querySelector('.form');
+                    toRemove.remove();
+                }))
+            });
         };
         return 'Form for adding new book added to document';
     });
-}
+};
