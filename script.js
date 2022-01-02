@@ -59,11 +59,19 @@ function displayBooks() {
     newRow.appendChild(pagesColumn);
     const readColumn = document.createElement('DIV');
     readColumn.classList = 'column';
-    const check = document.createElement('INPUT');
-    check.type = 'CHECKBOX';
-    check.classList = 'checkbox';
-    if(book.read) check.checked = true;
-    readColumn.appendChild(check);
+    const newMarkReadButton = document.createElement('BUTTON');
+    newMarkReadButton.dataset.location = i;
+    newMarkReadButton.textContent = 'Mark Read';
+    newMarkReadButton.classList = 'read'
+    readColumn.appendChild(newMarkReadButton);
+    const read = document.createElement('DIV');
+    read.classList = 'read';
+    if(book.read) {
+        read.textContent = 'You have read this book!';
+    } else {
+        read.textContent = 'You have not read this one yet!';
+    };
+    readColumn.appendChild(read);
     newRow.appendChild(readColumn);
     const deleteColumn = document.createElement('DIV');
     deleteColumn.classList = 'column';
@@ -77,6 +85,7 @@ function displayBooks() {
     i += 1;
     }));
     giveDeleteBtnsListeners();
+    makeReadButtonListener();
     return 'Books displayed';
 };
 
@@ -138,11 +147,25 @@ function addBook() {
     displayBooks();
 };
 
+function makeReadButtonListener() {
+    const readButtons = document.querySelectorAll('.read');
+    readButtons.forEach(button => {
+        button.addEventListener('click', e => {
+            if(myLibrary[button.dataset.location].read === true) {
+                myLibrary[button.dataset.location].read = false;
+            } else {
+                myLibrary[button.dataset.location].read = true;
+            };
+            reset();
+            displayBooks();
+        });
+    });
+};
+
 function giveDeleteBtnsListeners() {
     const deleteButtons = document.querySelectorAll('.delete');
     deleteButtons.forEach(button => {
         button.addEventListener('click', e => {
-            console.log(button.dataset.location);
             myLibrary.splice(button.dataset.location, 1);
             reset();
             displayBooks();
