@@ -13,10 +13,10 @@ function Book(title, author, pages, read) {
     this.author = author
     this.pages = pages
     this.read = read
-    this.info = function() {
-        return (title + ' by ' + author + ', ' + pages + ', ' + read)
-    };
-    console.log(this.info());
+    // this.info = function() {
+    //     return (title + ' by ' + author + ', ' + pages + ', ' + read)
+    // };
+    // console.log(this.info());
 };
 
 const myFields = [
@@ -65,7 +65,7 @@ function displayBooks() {
         // make it so check box is xhexk if read = true
         readColumn.appendChild(newInput);
         newRow.appendChild(readColumn);
-        masterRow.appendChild(newRow);
+        booklist.appendChild(newRow);
     }));
     return 'Books displayed';
 };
@@ -107,7 +107,6 @@ function newBook() {
     });
 };
 
-
 function addBook() {
     const title = document.getElementById('title').value;
     const author = document.getElementById('author').value;
@@ -119,8 +118,24 @@ function addBook() {
         toRemove.remove();
     }));
     enableaddbook = true;
-    myLibrary += Book(title, author, pages, read);
+    const newBook = Object.create(Book);
+    newBook.title = title;
+    newBook.author = author;
+    newBook.pages = pages;    
+    newBook.read  = read;
+    myLibrary.push(newBook);
+    reset();
     displayBooks();
+};
+
+function reset() {
+    const masterrow = document.getElementById('masterrow');
+    masterrow.remove();
+    const rows = document.querySelectorAll('.row');
+    rows.forEach(row => {
+        rowToRemove = document.querySelector('.row');
+        rowToRemove.remove();
+    })
 };
 
 displayBooks();
