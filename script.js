@@ -34,7 +34,7 @@ function displayBooks() {
     booklist.appendChild(masterRow);
     Object.keys(myFields).forEach((field => {
         const masterColumn = document.createElement('DIV');
-        masterColumn.classList.add = 'mastercolumn';
+        masterColumn.id = 'mastercolumn';
         masterColumn.textContent = myFields[field][0];
         masterRow.appendChild(masterColumn);
         if(myFields[field][1] === 'BUTTON') {
@@ -43,24 +43,25 @@ function displayBooks() {
     }));
         myLibrary.forEach((book => {
         const newRow = document.createElement('DIV');
-        newRow.id = 'row';
+        newRow.classList = 'row';
         const titleColumn = document.createElement('DIV');
-        titleColumn.classList.add = 'column';
+        titleColumn.classList = 'column';
         titleColumn.textContent = book.title;
         newRow.appendChild(titleColumn);
         const authorColumn = document.createElement('DIV');
-        authorColumn.classList.add = 'column';
+        authorColumn.classList = 'column';
         authorColumn.textContent = book.author;
         newRow.appendChild(authorColumn);
         const pagesColumn = document.createElement('DIV');
-        pagesColumn.classList.add = 'column';
+        pagesColumn.classList = 'column';
         pagesColumn.textContent = book.pages;
         newRow.appendChild(pagesColumn);
         const readColumn = document.createElement('DIV');
-        readColumn.classList.add = 'column';
+        readColumn.classList = 'column';
         const newInput = document.createElement('INPUT');
         newInput.type = 'CHECKBOX';
         newInput.id = 'checkbox';
+        if(book.read) newInput.checked = true;
         // make it so check box is xhexk if read = true
         readColumn.appendChild(newInput);
         newRow.appendChild(readColumn);
@@ -99,20 +100,27 @@ function newBook() {
             newInput.id  = myFields[field][2];
             const submit = document.getElementById('submit');
             submit.addEventListener('click', submit => {
-                const title = document.getElementById('title').value;
-                const author = document.getElementById('author').value;
-                const pages = document.getElementById('pages').value;
-                const read = document.getElementById('read').checked;
-                enableaddbook = true;
-                myLibrary += new Book(title, author, pages, read);
-                const forms = document.querySelectorAll('.form')
-                console.log(forms);
-                forms.forEach((form => {
-                    const toRemove = document.querySelector('.form');
-                    toRemove.remove();
-                }))
+                addBook();
             });
         };
         return 'Form for adding new book added to document';
     });
 };
+
+
+function addBook() {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const read = document.getElementById('read').checked;
+    const forms = document.querySelectorAll('.form');
+    forms.forEach((form => {
+        const toRemove = document.querySelector('.form');
+        toRemove.remove();
+    }));
+    enableaddbook = true;
+    myLibrary += Book(title, author, pages, read);
+    displayBooks();
+};
+
+displayBooks();

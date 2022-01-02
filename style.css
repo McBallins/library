@@ -88,3 +88,16 @@ hr {
 input, select {
     vertical-align:middle;
 }
+
+.row, #masterrow {
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.column, #mastercolumn {
+    flex-grow: 1;
+    flex-basis: 0;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
