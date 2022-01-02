@@ -95,7 +95,7 @@ input, select {
     flex-wrap: wrap;
 }
 
-.column, #mastercolumn {
+.column, .mastercolumn {
     flex-grow: 1;
     flex-basis: 0;
     box-sizing: border-box;
