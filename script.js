@@ -76,6 +76,7 @@ function displayBooks() {
     booklist.appendChild(newRow);
     i += 1;
     }));
+    giveDeleteBtnsListeners();
     return 'Books displayed';
 };
 
@@ -137,6 +138,18 @@ function addBook() {
     displayBooks();
 };
 
+function giveDeleteBtnsListeners() {
+    const deleteButtons = document.querySelectorAll('.delete');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', e => {
+            console.log(button.dataset.location);
+            myLibrary.splice(button.dataset.location, 1);
+            reset();
+            displayBooks();
+        });
+    });
+};
+
 function reset() {
     const masterrow = document.getElementById('masterrow');
     masterrow.remove();
@@ -144,7 +157,7 @@ function reset() {
     rows.forEach(row => {
         rowToRemove = document.querySelector('.row');
         rowToRemove.remove();
-    })
+    });
 };
 
 displayBooks();
