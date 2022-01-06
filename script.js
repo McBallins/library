@@ -1,6 +1,22 @@
-const isYoMama = new Book('is yo mama?', 'George', 9999, true);
-const notYoMama = new Book('not yo mama', 'Elon Musk', 420, true);
-const yoMama = new Book('Yo Mama', 'Fat Albert', 69, false);
+
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.read = read
+        };
+    info() {
+        return (title + ' by ' + author + ', ' + pages + ', ' + read)
+    };
+    logInfo() {
+    console.log(Book.info());
+    };
+};
+
+let isYoMama = new Book('is yo mama?', 'George', 9999, true);
+let notYoMama = new Book('not yo mama', 'Elon Musk', 420, true);
+let yoMama = new Book('Yo Mama', 'Fat Albert', 69, false);
 
 let myLibrary = [
     isYoMama,
@@ -8,16 +24,7 @@ let myLibrary = [
     yoMama,
 ];
 
-function Book(title, author, pages, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-    // this.info = function() {
-    //     return (title + ' by ' + author + ', ' + pages + ', ' + read)
-    // };
-    // console.log(this.info());
-};
+console.log(myLibrary[1])
 
 const myFields = [
     ['Title', 'TEXT', 'title'],
@@ -65,7 +72,7 @@ function displayBooks() {
     newMarkReadButton.classList = 'read'
     readColumn.appendChild(newMarkReadButton);
     const read = document.createElement('DIV');
-    read.classList = 'read';
+    read.classList = 'readtext';
     if(book.read) {
         read.textContent = 'You have read this book!';
     } else {
@@ -137,11 +144,7 @@ function addBook() {
         toRemove.remove();
     }));
     enableaddbook = true;
-    const newBook = Object.create(Book);
-    newBook.title = title;
-    newBook.author = author;
-    newBook.pages = pages;    
-    newBook.read  = read;
+    const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
     reset();
     displayBooks();
